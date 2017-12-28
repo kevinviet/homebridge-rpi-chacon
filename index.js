@@ -14,6 +14,7 @@ function ChaconAccessory(log, config) {
   this.deviceId     = config['deviceId'];
   this.emitterId    = config['emitterId'];
   this.isDimmable   = config['dimmable'];
+  this.isInverted   = config['invert']
   if (noInitDone) {
     chaconEmitter.init();
     noInitDone = false;
@@ -23,7 +24,7 @@ function ChaconAccessory(log, config) {
 ChaconAccessory.prototype = {
   setPowerState: function(powerOn, callback) {
     var that = this;
-    var order = chaconEmitter.buildOrder(this.emitterId, this.deviceId, powerOn);
+    var order = chaconEmitter.buildOrder(this.emitterId, this.deviceId, this.isInverted == "true" ? !powerOn : powerOn);
     chaconEmitter.transmit(order);
     callback(null);
   },
@@ -38,16 +39,13 @@ ChaconAccessory.prototype = {
   getServices: function() {
     var switchService = new Service.Switch(this.name);
     var lightBulb = new Service.Lightbulb(this.name);
-    //var informationService = new Service.AccessoryInformation();
-
-    /* informationService
-      .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
-      .setCharacteristic(Characteristic.Model, this.model_name)
-      .setCharacteristic(Characteristic.SerialNumber, this.id);
-    */
+    
     switchService
       .getCharacteristic(Characteristic.On)
       .on('set', this.setPowerState.bind(this));
+    if(this.isInverted == "true") {
+      switchService.setCharacteristic(Characteristic.On, true)
+    }
     lightBulb
       .getCharacteristic(Characteristic.On)
       .on('set', this.setPowerState.bind(this));
