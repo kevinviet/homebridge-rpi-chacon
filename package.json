@@ -11,7 +11,7 @@
     "homebridge": ">=0.2.0"
   },
   "dependencies": {
-    "wiringpi-node": "^2.4.4"
+    "node-wiring-pi": "^0.0.4"
   },
   "keywords": [
     "RF433",

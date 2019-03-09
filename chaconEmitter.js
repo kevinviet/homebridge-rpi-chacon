@@ -1,4 +1,4 @@
-var wpi = require('wiringpi-node')
+var wpi = require('node-wiring-pi')
 
 var pin = 0;
 var dimLevels = 15;

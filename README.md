@@ -5,6 +5,12 @@ This plugin uses extensively the WiringPi lib to communicate with GPIO ports of
 the raspberry. This plugin is compatible with RF433 emitter wired to the Raspberry.
 
 ## How to install
+
+1. Install homebridge using: `npm install -g homebridge`
+2. Install wiringPi using: `sudo apt-get install wiringpi`
+3. Add rights to homebridge user if running homebridge as systemd service: `sudo usermod -G gpio homebridge`
+4. Install this plugin using: `npm install -g homebridge-rpi-chacon`
+
 ## How to use
 
 ### Configuration
